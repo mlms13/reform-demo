@@ -1,3 +1,5 @@
+open Relude.Globals;
+
 module Person = [%lenses
   type t = {
     firstName: string,
@@ -27,29 +29,24 @@ let offer: OfferForm.t = {
 type offerField =
   | Field(OfferForm.field('a), 'a): offerField;
 
-let patches: list(offerField) = [
-  Field(IsAgent, true),
-  Field(Amount, 3.14),
-];
+let patches = [Field(IsAgent, true), Field(Amount, 3.14)];
 
-let applyPatches = (offer, xs) =>
-  Belt.List.reduce(xs, offer, (acc, curr) =>
-    switch (curr) {
-    | Field(field, v) => acc->OfferForm.set(field, v)
-    }
-  );
+let applyPatches =
+  List.foldLeft((acc, Field(field, v)) => OfferForm.set(acc, field, v));
 
-let patchToJSON = (xs: list(offerField)) =>
-  Belt.List.reduce(xs, [||], (acc, curr) =>
-    switch (curr) {
-    | Field(OfferForm.IsAgent, v) =>
-      Array.append(acc, [|("isAgent", Js.Json.boolean(v))|])
-    | Field(OfferForm.Amount, v) =>
-      Array.append(acc, [|("amount", Js.Json.number(v))|])
-    | _ => acc
-    }
+let patchToJSON =
+  List.foldLeft(
+    acc =>
+      fun
+      | Field(OfferForm.IsAgent, v) =>
+        Array.append(("isAgent", Js.Json.boolean(v)), acc)
+      | Field(OfferForm.Amount, v) =>
+        Array.append(("amount", Js.Json.number(v)), acc)
+      | _ => acc,
+    [||],
   )
-  |> Js.Dict.fromArray
-  |> Js.Json.object_;
+  >> Js.Dict.fromArray
+  >> Js.Json.object_;
 
 let updated = applyPatches(offer, patches);
+let json = patchToJSON(patches);

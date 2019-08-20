@@ -4,8 +4,10 @@
     "src"
   ],
   "bs-dependencies": [
+    "bs-abstract",
     "bs-reform",
-    "reason-react"
+    "reason-react",
+    "relude"
   ],
   "reason": {
     "react-jsx": 3
