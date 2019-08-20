@@ -1,0 +1,15 @@
+node_modules
+*/log
+.vscode
+
+# generated
+/lib/bs
+*.bs.js
+/dist
+.merlin
+.bsb.lock
+/website/build
+/coverage
+
+# os files
+.DS_Store

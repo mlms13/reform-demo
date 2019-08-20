@@ -1,0 +1,20 @@
+{
+  "name": "reform-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bs-reform": "^9.1.4",
+    "reason-react": "^0.7.0",
+    "reschema": "^1.1.4"
+  },
+  "devDependencies": {
+    "bs-platform": "^5.0.6",
+    "lenses-ppx": "^2.0.0"
+  }
+}
