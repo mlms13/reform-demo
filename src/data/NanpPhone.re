@@ -47,13 +47,18 @@ let sep = Parser.anyOfStr(["-", "."]);
 let parser: Parser.t(t) =
   Parser.(
     unsafeMake
-    <$> AreaCode.parser
+    <$> ws
+    *> opt(str("+") *> str("1") <|> str("1"))
+    *> ws
+    *> AreaCode.parser
     <* opt(sep)
     <* ws
     <*> times3(anyDigitAsInt)  // TODO can't start with 1 or end with a pair of 1s
     <* opt(sep)
     <* ws
     <*> times4(anyDigitAsInt)
+    <* ws
+    <* eof
   );
 
 let parse = str => Parser.runParser(str, parser);

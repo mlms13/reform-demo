@@ -26,15 +26,40 @@ describe("NanpPhone", () => {
     expect(parse("3334445555")) |> toEqual(Result.ok(tuple3334445555))
   );
 
-  // TODO: optional country code (maybe prefixed with +)
+  test("1 (333) 444-5555 (country code: 1, succeeds)", () =>
+    expect(parse("1 (333) 444-5555"))
+    |> toEqual(Result.ok(tuple3334445555))
+  );
+
+  test("+13334445555 (leading +1 country code, succeeds)", () =>
+    expect(parse("+13334445555")) |> toEqual(Result.ok(tuple3334445555))
+  );
 
   test("empty string (fails)", () =>
     expect(NanpPhone.parse("") |> Result.isError) |> toEqual(true)
   );
 
-  // TODO: invalid characters, e.g. exchange 911, area code starts with 1
-  // TODO: country code present, not 1
-  // TODO: too many characters
+  // TODO: invalid characters, e.g. exchange 911
+
+  test("(123) 444-5555 (area code starts with 1, fails)", () =>
+    expect(parse("(123) 444-5555") |> Result.isError) |> toEqual(true)
+  );
+
+  test("+11234445555 (country and area code both 1, fails)", () =>
+    expect(parse("+11234445555") |> Result.isError) |> toEqual(true)
+  );
+
+  test("+23334445555 (non-1 country code, fails)", () =>
+    expect(parse("+23334445555") |> Result.isError) |> toEqual(true)
+  );
+
+  test("33344455556 (11 characters, no valid country code, fails)", () =>
+    expect(parse("33344455556") |> Result.isError) |> toEqual(true)
+  );
+
+  test("133344455556 (12 characters, with valid country code, fails)", () =>
+    expect(parse("133344455556") |> Result.isError) |> toEqual(true)
+  );
 
   test("too few characters (fails)", () =>
     expect(NanpPhone.parse("333444") |> Result.isError) |> toEqual(true)
