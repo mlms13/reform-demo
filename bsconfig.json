@@ -1,13 +1,24 @@
 {
   "name": "reform-demo",
   "sources": [
-    "src"
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "test",
+      "type": "dev"
+    }
   ],
   "bs-dependencies": [
     "bs-abstract",
     "bs-reform",
     "reason-react",
-    "relude"
+    "relude",
+    "relude-parse"
+  ],
+  "bs-dev-dependencies": [
+    "@glennsl/bs-jest"
   ],
   "reason": {
     "react-jsx": 3

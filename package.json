@@ -13,10 +13,20 @@
     "bs-reform": "^9.1.4",
     "reason-react": "^0.7.0",
     "relude": "^0.24.0",
+    "relude-parse": "^0.4.0",
     "reschema": "^1.1.4"
   },
   "devDependencies": {
+    "@glennsl/bs-jest": "^0.4.9",
     "bs-platform": "^5.0.6",
     "lenses-ppx": "^2.0.0"
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "./test"
+    ],
+    "testMatch": [
+      "**/test/*.js"
+    ]
   }
 }
